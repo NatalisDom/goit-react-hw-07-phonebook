@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import css from './ContactForm.module.css';
 
 import { Notify } from 'notiflix';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact, fetchContacts } from 'redux/slice';
-import { nanoid } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
+import { addContact, fetchContacts } from 'redux/contacts/operations';
+// import { nanoid } from '@reduxjs/toolkit';
 
 function Form() {
   const [dataForm, setDataForm] = useState({
@@ -12,9 +12,13 @@ function Form() {
     number: '',
   });
 
-  const contacts = useSelector(fetchContacts);
+  // const contacts = useSelector(fetchContacts);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   const nameChange = event => {
     const { name, value } = event.target;
@@ -26,12 +30,7 @@ function Form() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    for (const contact of contacts) {
-      if (contact.name.toLowerCase() === dataForm.name.toLowerCase()) {
-        return Notify.failure(`${dataForm.name} is already in contacts.`);
-      }
-    }
-    dispatch(addContact({ ...dataForm, id: nanoid() }));
+    dispatch(addContact(dataForm));
     reset();
   };
 

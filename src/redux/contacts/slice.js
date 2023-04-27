@@ -10,7 +10,7 @@ const initialState = {
 };
 
 const contactsSlice = createSlice({
-  name: contacts,
+  name: 'contacts',
   initialState: initialState,
   extraReducers: {
     [fetchContacts.pending]: store => {
@@ -25,11 +25,11 @@ const contactsSlice = createSlice({
       store.contacts.isLoading = false;
       store.contacts.error = payload;
     },
-    [addContact1.pending]: store => {
+    [addContact.pending]: store => {
       store.contacts.isLoading = true;
       store.contacts.error = null;
     },
-    [addContact1.fulfilled]: (store, { payload }) => {
+    [addContact.fulfilled]: (store, { payload }) => {
       store.contacts.isLoading = false;
       store.contacts.items.push(payload);
     },
@@ -47,7 +47,7 @@ const contactsSlice = createSlice({
         item => item.id !== payload
       );
     },
-    [deleteContact1.rejected]: (store, { payload }) => {
+    [deleteContact.rejected]: (store, { payload }) => {
       store.contacts.isLoading = false;
       store.contacts.error = payload;
     },

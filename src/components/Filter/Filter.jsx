@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import css from './Filter.module.css';
 import { useDispatch } from 'react-redux';
-import { filter } from 'redux/slice';
+// import { filter } from 'redux/slice';
 
 const Filter = () => {
   const dispatch = useDispatch();
@@ -9,10 +9,7 @@ const Filter = () => {
     <div className={css.filter}>
       <label>
         Find contacts by name
-        <input
-          className={css.input}
-          onChange={e => dispatch(filter(e.target.value))}
-        />
+        <input className={css.input} />
       </label>
     </div>
   );
