@@ -2,15 +2,12 @@ import PropTypes from 'prop-types';
 import css from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from 'redux/contacts/operations';
+import { selectVisibleFilter } from 'redux/selectors';
 
 export const List = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(state => state.contacts.filter);
-  const contacts = useSelector(state => state.contacts.contacts.items);
-  
-  const contactsFilter = contacts.filter(el =>
-    el.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase().trim())
-  );
+  const contactsFilter = useSelector(selectVisibleFilter);
+
   return (
     <ul className={css.list}>
       {contactsFilter.map(({ id, name, number }) => {
