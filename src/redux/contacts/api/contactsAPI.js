@@ -12,12 +12,11 @@ export const getContacts = async () => {
 
 export const addContact = async user => {
   const { data } = await instance.post('/', user);
-  console.log(data);
   return data;
 };
 
 export const deleteContacts = async id => {
   const { data } = await instance.delete(`/${id}`);
-  console.log(data);
+  
   return data;
 };

@@ -1,20 +1,19 @@
 import PropTypes from 'prop-types';
 import css from './ContactList.module.css';
-
 import { useDispatch, useSelector } from 'react-redux';
-// import { deleteContact, fetchContacts, fetchFilter } from 'redux/slice';
 import { deleteContact } from 'redux/contacts/operations';
 
 export const List = () => {
   const dispatch = useDispatch();
-  // const count = useSelector(fetchContacts);
-
-  // const count1 = useSelector(fetchFilter);
-
-  const data = useSelector(state => state.contacts.contacts.items);
+  const filter = useSelector(state => state.contacts.filter);
+  const contacts = useSelector(state => state.contacts.contacts.items);
+  
+  const contactsFilter = contacts.filter(el =>
+    el.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase().trim())
+  );
   return (
     <ul className={css.list}>
-      {data.map(({ id, name, number }) => {
+      {contactsFilter.map(({ id, name, number }) => {
         return (
           <li key={id} className={css.name}>
             {name}: {number}

@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
 import css from './ContactForm.module.css';
-
 import { Notify } from 'notiflix';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact, fetchContacts } from 'redux/contacts/operations';
-// import { nanoid } from '@reduxjs/toolkit';
 
 function Form() {
   const [dataForm, setDataForm] = useState({
@@ -12,9 +10,8 @@ function Form() {
     number: '',
   });
 
-  // const contacts = useSelector(fetchContacts);
-
   const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.contacts.items);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -30,6 +27,13 @@ function Form() {
 
   const handleSubmit = event => {
     event.preventDefault();
+    for (const contact of contacts) {
+      if (
+        dataForm.name.toLocaleLowerCase() === contact.name.toLocaleLowerCase()
+      ) {
+        return Notify.failure(`${dataForm.name} is already in contacts.`);
+      }
+    }
     dispatch(addContact(dataForm));
     reset();
   };
